@@ -1,0 +1,33 @@
+{
+	"name": "negspace",
+	"private": true,
+	"version": "0.1.4",
+	"type": "module",
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"dev": "bun x vite --port 3000",
+		"build": "vite build",
+		"preview": "vite preview",
+		"codegen": "bun x panda -c panda.config.ts",
+		"typecheck": "bun x tsc --noEmit"
+	},
+	"dependencies": {
+		"@ariakit/react": "^0.4.17",
+		"chroma-js": "^3.1.2",
+		"classnames": "^2.5.1",
+		"react-dom": "19.1.0"
+	},
+	"devDependencies": {
+		"@pandacss/dev": "^0.53.3",
+		"@types/bun": "^1.3.13",
+		"@types/react": "^19.0.12",
+		"@types/react-dom": "^19.0.4",
+		"@vitejs/plugin-react": "^4.3.4",
+		"vite": "^6.4.3",
+		"typescript": "^5.9.3",
+		"react": "19.1.0",
+		"@pandacss/types": "^0.53.3"
+	}
+}
