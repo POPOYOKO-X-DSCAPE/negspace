@@ -1,0 +1,17 @@
+/* Counter for the kit <App> ("& button": align/justify stretch) descendant
+   atoms. Those atoms are emitted into @layer utilities, which outranks every
+   negspace css() override (@layer utilities as well, but the kit selector is
+   higher-specificity: `.app[…] button` vs a single class) and @layer base
+   (globalCss). Unlayered author rules sort after ALL @layer rules
+   (css-cascade-5), so this reliably re-asserts centered button layout across
+   the whole app. */
+.app-core button {
+  align-items: center;
+  justify-content: center;
+}
+
+/* The download row is a full-width flex button whose two ends must stay
+   apart instead of centered. */
+.app-core button.app-download-row {
+  justify-content: space-between;
+}
