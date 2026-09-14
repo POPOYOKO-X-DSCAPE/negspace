@@ -38,6 +38,10 @@ jobs:
             echo "::notice::.env missing — skipping pages deploy"
             exit 0
           fi
+          # Project create is best-effort: the token may not carry the
+          # project-management permission — a missing project is a
+          # clear deploy error below.
+          bun x wrangler pages project create negspace --production-branch main || true
           bun x wrangler pages deploy dist --project-name=negspace
 
       - name: Publish versioned release (sources + dist)
