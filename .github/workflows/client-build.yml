@@ -31,11 +31,14 @@ jobs:
       - name: Build
         run: bun run build
 
-      - name: Deploy to Cloudflare Pages (credentials in committed .env)
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
-          if [ ! -f .env ]; then
-            echo "::notice::.env missing — skipping pages deploy"
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::notice::Cloudflare secrets not configured — skipping pages deploy"
             exit 0
           fi
           # Project create is best-effort: the token may not carry the
