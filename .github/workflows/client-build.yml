@@ -45,10 +45,9 @@ jobs:
           # project-management permission — a missing project is a
           # clear deploy error below.
           bun x wrangler pages project create negspace --production-branch main || true
-          # Custom domain attach is best-effort: the token may lack the
-          # zone permission — the identical attach works from the CF
-          # dashboard (Pages → project → Custom domains).
-          curl -sSf -X PUT "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects/negspace/custom-domains/neg.space" -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" || true
+          # Custom domain (neg.space) is a one-time attach — no API call here:
+          # attach it once from the CF dashboard (Pages → project → Custom
+          # domains); deploys then serve it automatically.
           bun x wrangler pages deploy dist --project-name=negspace
 
       - name: Publish versioned release (sources + dist)
