@@ -5,7 +5,7 @@ import svgr from "vite-plugin-svgr";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-	base: "/negspace/",
+	base: "/",
 
 	server: {
 		port: 3000,
