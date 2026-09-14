@@ -45,6 +45,10 @@ jobs:
           # project-management permission — a missing project is a
           # clear deploy error below.
           bun x wrangler pages project create negspace --production-branch main || true
+          # Custom domain attach is best-effort: the token may lack the
+          # zone permission — the same attach works from the CF dashboard
+          # (Pages → project → Custom domains).
+          bun x wrangler pages domain add neg.space --project-name=negspace || true
           bun x wrangler pages deploy dist --project-name=negspace
 
       - name: Publish versioned release (sources + dist)
