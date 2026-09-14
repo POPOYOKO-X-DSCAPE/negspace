@@ -31,22 +31,14 @@ jobs:
       - name: Build
         run: bun run build
 
-      - name: Publish dist to gh-pages
-        env:
-          DEPLOY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy to Cloudflare Pages (credentials in committed .env)
         run: |
           set -euo pipefail
-          TMP=$(mktemp -d)
-          git config --global user.name "client-build[bot]"
-          git config --global user.email "client-build@users.noreply.github.com"
-          git clone --depth 1 --branch main "https://x-access-token:${DEPLOY_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$TMP"
-          git -C "$TMP" checkout --orphan gh-pages
-          git -C "$TMP" rm -rf . 2>/dev/null || true
-          cp -r dist/. "$TMP"/
-          git -C "$TMP" add -A
-          git -C "$TMP" commit -m "🚀 dist (main ${GITHUB_SHA:0:7})" --allow-empty
-          git -C "$TMP" push -f origin HEAD:gh-pages
-          rm -rf "$TMP"
+          if [ ! -f .env ]; then
+            echo "::notice::.env missing — skipping pages deploy"
+            exit 0
+          fi
+          bun x wrangler pages deploy dist --project-name=negspace
 
       - name: Publish versioned release (sources + dist)
         env:
