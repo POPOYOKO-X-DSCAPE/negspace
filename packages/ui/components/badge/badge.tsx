@@ -1,6 +1,6 @@
-import { Stack } from "@packages/ui";
 import classNames from "classnames";
 import type { ReactNode } from "react";
+import { Stack } from "../../abstract/stack/stack";
 import { Styles } from "./styles";
 
 interface IBadgeProps {
